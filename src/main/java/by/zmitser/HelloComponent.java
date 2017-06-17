@@ -14,6 +14,19 @@ public class HelloComponent {
 
     public void newHello(Exchange exchange) {
         System.out.println(exchange.getProperty("value"));
+        exchange.setProperty("mess", "I am a stupid developer");
+    }
+
+    public void stupid(String message) {
+        System.out.println(message);
+    }
+
+    public String returnStringMessage() {
+        return "New String For Me!";
+    }
+
+    public void printString(String message) {
+        System.out.println(message);
     }
 
     public void by() {

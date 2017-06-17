@@ -1,13 +1,16 @@
 <routes xmlns="http://camel.apache.org/schema/spring">
+
     <route id="test">
         <from uri="direct:test"/>
         <choice>
             <when>
                 <simple>${body} == 'hello'</simple>
                 <loop>
-                    <constant>8</constant>
+                    <simple>${body.length}</simple>
                     <bean ref="helloComponent" method="hello"/>
                     <bean ref="helloComponent" method="newHello"/>
+                    <bean ref="helloComponent" method="stupid(${property.mess})"/>
+                    <to uri="direct:another"/>
                 </loop>
 
             </when>
@@ -20,4 +23,16 @@
             </when>
         </choice>
     </route>
+    <route id="Another Route">
+        <from uri="direct:another" />
+        <bean ref="helloComponent" method="stupid(${property.mess})"/>
+        <to uri="direct:new-route"/>
+    </route>
+
+    <route id="Continue experiment">
+        <from uri="direct:new-route" />
+        <bean ref="helloComponent" method="returnStringMessage"/>
+        <bean ref="helloComponent" method="printString"/>
+    </route>
+
 </routes>
