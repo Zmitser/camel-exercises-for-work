@@ -1,0 +1,23 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="test">
+        <from uri="direct:test"/>
+        <choice>
+            <when>
+                <simple>${body} == 'hello'</simple>
+                <loop>
+                    <constant>8</constant>
+                    <bean ref="helloComponent" method="hello"/>
+                    <bean ref="helloComponent" method="newHello"/>
+                </loop>
+
+            </when>
+            <when>
+                <simple>${body} == 'by'</simple>
+                <loop>
+                    <constant>8</constant>
+                    <bean ref="helloComponent" method="by"/>
+                </loop>
+            </when>
+        </choice>
+    </route>
+</routes>
